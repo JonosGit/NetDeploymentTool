@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-This script provides the following functionality for deploying VPN Interop.
+This script provides functionality to deploy a site to site VPN to a new or existing VNET.
 
 .DESCRIPTION
-Deploys a VPN connection on an existing VNET
+Deploys a VNET, NSG and/or Site to Site VPN Connection.
 
 .PARAMETER LocalNetIP
 
@@ -40,13 +40,13 @@ $NSGEnabled = "False",
 $NSGName = "NSG",
 [Parameter(Mandatory=$False,ValueFromPipelinebyPropertyName=$true)]
 [ipaddress]
-$LocalNetPip = "208.34.2.22",
+$LocalNetPip = "207.21.2.1",
 [Parameter(Mandatory=$False,ValueFromPipelinebyPropertyName=$true)]
 [string]
 $LocalAddPrefix = "10.10.0.0/24",
 [Parameter(Mandatory=$False,ValueFromPipelinebyPropertyName=$true,Position=2)]
 [string]
-$ResourceGroupName = 'xRes1',
+$ResourceGroupName = 'ResGrp',
 [Parameter(Mandatory=$False,ValueFromPipelinebyPropertyName=$true)]
 [string]
 $vNetResourceGroupName = $ResourceGroupName,
@@ -117,7 +117,7 @@ Write-Host "Configure Local Device with Azure VNET vpn Public IP"
 Function ConnectVPN {
 [PSObject]$gateway1 = Get-AzureRmVirtualNetworkGateway -Name vnetvpn1 -ResourceGroupName $ResourceGroupName -WarningAction SilentlyContinue
 [PSObject]$local = Get-AzureRmLocalNetworkGateway -Name LocalSite -ResourceGroupName $ResourceGroupName -WarningAction SilentlyContinue
-New-AzureRmVirtualNetworkGatewayConnection -ConnectionType IPSEC  -Name sitetosite -ResourceGroupName $ResourceGroupName -Location $Location -VirtualNetworkGateway1 $gateway1 -LocalNetworkGateway2 $local -SharedKey 'abcd4321' -Verbose -Force -RoutingWeight 10
+New-AzureRmVirtualNetworkGatewayConnection -ConnectionType IPSEC  -Name sitetosite -ResourceGroupName $ResourceGroupName -Location $Location -VirtualNetworkGateway1 $gateway1 -LocalNetworkGateway2 $local -SharedKey '4321avfe' -Verbose -Force -RoutingWeight 10
 }
 Function ProvisionResGrp
 {
